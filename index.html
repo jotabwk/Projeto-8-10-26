@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto AlerGria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        alergria: {
+                            pink: '#FF5AAE',
+                            blue: '#2F9BFF',
+                            yellow: '#FAEA53',
+                            orange: '#FF8200'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-fredoka { font-family: 'Fredoka', sans-serif; }
+        .font-nunito { font-family: 'Nunito', sans-serif; }
+        
+        /* Sistema de abas com transição suave */
+        .view-section { 
+            display: none; 
+            opacity: 0; 
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .view-section.active { 
+            display: block; 
+        }
+        .view-section.fade-in { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+        }
+
+        /* Animação para as formas flutuantes */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(8deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .shape-float { animation: float 7s ease-in-out infinite; }
+        .shape-float-delay-1 { animation: float 9s ease-in-out infinite 1.5s; }
+        .shape-float-delay-2 { animation: float 8s ease-in-out infinite 3s; }
+        
+        /* Suavidade global no scroll */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="font-nunito text-gray-800 dark:text-gray-100 transition-colors duration-500 relative overflow-x-hidden min-h-screen bg-fixed bg-gradient-to-br from-alergria-blue/15 via-alergria-pink/10 to-alergria-yellow/15 dark:from-alergria-blue/20 dark:via-gray-900 dark:to-alergria-orange/10">
+
+    <!-- Formas de Fundo (Mais aparentes e coloridas) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <!-- Círculos -->
+        <div class="absolute top-10 left-10 w-32 h-32 bg-alergria-pink rounded-full opacity-40 dark:opacity-20 shape-float shadow-xl backdrop-blur-3xl"></div>
+        <div class="absolute bottom-40 right-20 w-48 h-48 bg-alergria-yellow rounded-full opacity-40 dark:opacity-20 shape-float-delay-1 shadow-xl"></div>
+        <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-alergria-blue rounded-full opacity-40 dark:opacity-20 shape-float-delay-2 shadow-xl"></div>
+        
+        <!-- Quadrados -->
+        <div class="absolute top-40 right-1/4 w-28 h-28 bg-alergria-blue transform rotate-12 opacity-30 dark:opacity-20 shape-float-delay-1 rounded-3xl shadow-xl"></div>
+        <div class="absolute bottom-20 left-1/4 w-32 h-32 bg-alergria-orange transform -rotate-12 opacity-30 dark:opacity-20 shape-float rounded-3xl shadow-xl"></div>
+
+        <!-- Estrelas -->
+        <i class="fa-solid fa-star absolute top-20 right-12 text-6xl text-alergria-yellow opacity-50 dark:opacity-30 shape-float-delay-2 drop-shadow-lg"></i>
+        <i class="fa-solid fa-star absolute top-3/4 left-12 text-5xl text-alergria-pink opacity-50 dark:opacity-30 shape-float-delay-1 drop-shadow-lg"></i>
+        <i class="fa-solid fa-star absolute bottom-1/3 right-1/3 text-7xl text-alergria-blue opacity-50 dark:opacity-30 shape-float drop-shadow-lg"></i>
+    </div>
+
+    <!-- Navbar Fixa e Colorida -->
+    <nav class="bg-gradient-to-r from-alergria-pink/10 via-white/60 to-alergria-blue/10 dark:from-alergria-pink/20 dark:via-gray-900/80 dark:to-alergria-blue/20 backdrop-blur-xl shadow-md p-4 sticky top-0 z-50 transition-colors duration-500 border-b border-white/40 dark:border-gray-700/50 border-t-4 border-t-alergria-pink">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logótipo -->
+            <div class="flex items-center space-x-2 cursor-pointer transition-transform duration-300 hover:scale-110 active:scale-95" onclick="showView('view-home')">
+                <img src="image_3b11e2.jpg" alt="Logótipo AlerGria" class="h-16 w-auto object-contain rounded-xl shadow-sm">
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleTheme()" class="text-xl p-2 rounded-full hover:bg-white/50 dark:hover:bg-gray-700/50 transition-all duration-300 hover:rotate-12 active:scale-90 shadow-sm">
+                    <i class="fa-solid fa-moon dark:hidden text-alergria-blue"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-alergria-yellow"></i>
+                </button>
+                <button onclick="showView('view-login')" class="font-fredoka font-bold text-alergria-blue dark:text-white hover:text-white hover:bg-alergria-blue transition-all duration-300 bg-white/80 dark:bg-gray-700/80 px-5 py-2 rounded-full active:scale-95 shadow-sm border border-alergria-blue/20">Entrar</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-4 min-h-[80vh] relative z-10">
+        
+        <!-- Home View -->
+        <section id="view-home" class="view-section active fade-in text-center py-12">
+            <h1 class="font-fredoka text-4xl md:text-5xl font-bold text-alergria-pink mb-4 drop-shadow-sm">
+                Mesmo de longe, o carinho chega até você.
+            </h1>
+            <p class="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-12 max-w-2xl mx-auto font-medium">
+                Uma plataforma de apoio emocional e entretenimento feita para transformar a distância em carinho com muita segurança e diversão.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <button onclick="showView('view-paciente')" class="group bg-gradient-to-br from-alergria-blue to-blue-400 text-white p-8 rounded-3xl shadow-xl transform transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:shadow-alergria-blue/30 active:scale-95 flex flex-col items-center border border-white/20">
+                    <i class="fa-solid fa-gamepad text-5xl mb-4 group-hover:animate-bounce"></i>
+                    <span class="font-fredoka text-2xl font-bold">Sou Paciente</span>
+                    <span class="text-sm mt-2 opacity-90">Jogos e mensagens</span>
+                </button>
+                <button onclick="showView('view-familiar')" class="group bg-gradient-to-br from-alergria-pink to-pink-400 text-white p-8 rounded-3xl shadow-xl transform transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:shadow-alergria-pink/30 active:scale-95 flex flex-col items-center border border-white/20">
+                    <i class="fa-solid fa-envelope-open-text text-5xl mb-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-fredoka text-2xl font-bold">Sou Familiar</span>
+                    <span class="text-sm mt-2 opacity-90">Envie seu carinho</span>
+                </button>
+                <button onclick="showView('view-ajudar')" class="group bg-gradient-to-br from-alergria-yellow to-yellow-300 text-gray-800 p-8 rounded-3xl shadow-xl transform transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:shadow-alergria-yellow/30 active:scale-95 flex flex-col items-center border border-white/20">
+                    <i class="fa-solid fa-hand-holding-heart text-5xl mb-4 group-hover:rotate-12 transition-transform text-alergria-orange"></i>
+                    <span class="font-fredoka text-2xl font-bold">Quero Ajudar</span>
+                    <span class="text-sm mt-2 opacity-90">Doações e voluntariado</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Paciente View -->
+        <section id="view-paciente" class="view-section py-8">
+            <div class="inline-flex items-center mb-8 cursor-pointer text-alergria-blue hover:text-blue-700 dark:text-blue-400 transition-all duration-300 hover:-translate-x-2 font-bold bg-white/70 backdrop-blur-sm dark:bg-gray-800/70 px-5 py-2 rounded-full shadow-sm border border-white/40" onclick="showView('view-home')">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voltar
+            </div>
+            <h2 class="font-fredoka text-3xl font-bold text-alergria-blue mb-6">Área de Diversão</h2>
+            
+            <div class="mb-8 bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-6 rounded-3xl shadow-lg border border-white/40 dark:border-gray-700/50">
+                <h3 class="font-fredoka text-xl mb-4 text-alergria-orange">Escolha sua idade:</h3>
+                <div class="flex flex-wrap gap-4">
+                    <button class="px-6 py-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-full font-bold hover:bg-alergria-yellow hover:text-gray-900 hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-600">4-8 anos</button>
+                    <button class="px-6 py-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-full font-bold hover:bg-alergria-yellow hover:text-gray-900 hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-600">9-12 anos</button>
+                    <button class="px-6 py-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-full font-bold hover:bg-alergria-yellow hover:text-gray-900 hover:scale-105 active:scale-95 transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-600">13+ anos</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-alergria-blue to-blue-400 text-white p-6 rounded-3xl text-center cursor-pointer shadow-lg hover:shadow-xl hover:shadow-alergria-blue/30 transform hover:-translate-y-2 active:scale-95 transition-all duration-300 border border-white/20">
+                    <i class="fa-solid fa-brain text-4xl mb-3"></i><br><span class="font-bold">Memória</span>
+                </div>
+                <div class="bg-gradient-to-br from-alergria-pink to-pink-400 text-white p-6 rounded-3xl text-center cursor-pointer shadow-lg hover:shadow-xl hover:shadow-alergria-pink/30 transform hover:-translate-y-2 active:scale-95 transition-all duration-300 border border-white/20">
+                    <i class="fa-solid fa-question text-4xl mb-3"></i><br><span class="font-bold">Quiz</span>
+                </div>
+                <div class="bg-gradient-to-br from-alergria-orange to-orange-400 text-white p-6 rounded-3xl text-center cursor-pointer shadow-lg hover:shadow-xl hover:shadow-alergria-orange/30 transform hover:-translate-y-2 active:scale-95 transition-all duration-300 border border-white/20">
+                    <i class="fa-solid fa-palette text-4xl mb-3"></i><br><span class="font-bold">Colorir</span>
+                </div>
+                <div class="bg-gradient-to-br from-alergria-yellow to-yellow-300 text-gray-800 p-6 rounded-3xl text-center cursor-pointer shadow-lg hover:shadow-xl hover:shadow-alergria-yellow/30 transform hover:-translate-y-2 active:scale-95 transition-all duration-300 border border-white/20">
+                    <i class="fa-solid fa-book-open text-4xl mb-3"></i><br><span class="font-bold">Histórias</span>
+                </div>
+            </div>
+
+            <h3 class="font-fredoka text-2xl font-bold text-alergria-pink mb-4">Sua Caixa do Afeto</h3>
+            <div id="patient-messages" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Mensagens aprovadas -->
+            </div>
+        </section>
+
+        <!-- Familiar View -->
+        <section id="view-familiar" class="view-section py-8">
+            <div class="inline-flex items-center mb-8 cursor-pointer text-alergria-pink hover:text-pink-700 dark:text-pink-400 transition-all duration-300 hover:-translate-x-2 font-bold bg-white/70 backdrop-blur-sm dark:bg-gray-800/70 px-5 py-2 rounded-full shadow-sm border border-white/40" onclick="showView('view-home')">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voltar
+            </div>
+            <h2 class="font-fredoka text-3xl font-bold text-alergria-pink mb-6">Enviar Carinho</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl border border-white/40 dark:border-gray-700/50">
+                    <h3 class="font-bold text-2xl mb-6 font-fredoka text-alergria-orange">Nova Mensagem</h3>
+                    <form onsubmit="submitMessage(event)" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-200">Apelido/Código do Paciente</label>
+                            <input type="text" id="msg-code" required class="w-full p-4 rounded-2xl border-2 border-pink-100 focus:border-alergria-pink focus:ring-0 dark:border-gray-600 bg-white/90 dark:bg-gray-700/90 transition-colors outline-none shadow-inner">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-200">Sua Mensagem</label>
+                            <textarea id="msg-text" required rows="4" class="w-full p-4 rounded-2xl border-2 border-pink-100 focus:border-alergria-pink focus:ring-0 dark:border-gray-600 bg-white/90 dark:bg-gray-700/90 transition-colors outline-none shadow-inner"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-200">Anexo (Foto/Vídeo até 1.2MB)</label>
+                            <input type="file" class="w-full p-2 text-sm text-gray-600 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-alergria-pink file:text-white hover:file:bg-pink-600 transition-all cursor-pointer">
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-alergria-pink to-pink-500 text-white font-bold text-lg py-4 rounded-2xl hover:shadow-lg hover:shadow-pink-500/30 active:scale-95 transition-all duration-300">Enviar para Aprovação</button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-2xl mb-6 font-fredoka text-alergria-blue">Status dos seus envios</h3>
+                    <div id="family-status-list" class="space-y-4">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ajudar View -->
+        <section id="view-ajudar" class="view-section py-8">
+            <div class="inline-flex items-center mb-8 cursor-pointer text-alergria-orange hover:text-orange-600 dark:text-orange-400 transition-all duration-300 hover:-translate-x-2 font-bold bg-white/70 backdrop-blur-sm dark:bg-gray-800/70 px-5 py-2 rounded-full shadow-sm border border-white/40" onclick="showView('view-home')">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voltar
+            </div>
+            <h2 class="font-fredoka text-3xl font-bold text-alergria-orange mb-6">Faça a Diferença</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl text-center border border-white/40 dark:border-gray-700/50 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-alergria-blue/20">
+                    <i class="fa-solid fa-hand-holding-dollar text-6xl text-alergria-blue mb-6 drop-shadow-md"></i>
+                    <h3 class="font-fredoka text-2xl font-bold mb-3 text-gray-800 dark:text-white">Doações</h3>
+                    <p class="mb-6 text-gray-600 dark:text-gray-300">Aceitamos Pix, Cartão ou Boleto. Ajude com brinquedos, livros ou recursos financeiros.</p>
+                    <button onclick="showView('view-doar')" class="bg-gradient-to-r from-alergria-blue to-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-lg hover:shadow-blue-500/40 active:scale-95 transition-all duration-300 border border-white/20">Quero Doar</button>
+                </div>
+                <div class="bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl text-center border border-white/40 dark:border-gray-700/50 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-alergria-pink/20">
+                    <i class="fa-solid fa-users text-6xl text-alergria-pink mb-6 drop-shadow-md"></i>
+                    <h3 class="font-fredoka text-2xl font-bold mb-3 text-gray-800 dark:text-white">Voluntariado</h3>
+                    <p class="mb-6 text-gray-600 dark:text-gray-300">Cadastre-se para ajudar na revisão de conteúdos carinhosos ou apoio logístico no projeto.</p>
+                    <button class="bg-gradient-to-r from-alergria-pink to-pink-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-lg hover:shadow-pink-500/40 active:scale-95 transition-all duration-300 border border-white/20">Inscrever-se</button>
+                </div>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl border border-white/40 dark:border-gray-700/50">
+                <h3 class="font-fredoka text-2xl font-bold mb-4 text-gray-800 dark:text-white">Campanha Atual: Livros para Todos</h3>
+                <div class="w-full bg-gray-200/50 dark:bg-gray-700/50 rounded-full h-5 mb-3 overflow-hidden shadow-inner backdrop-blur-sm">
+                    <div class="bg-gradient-to-r from-alergria-yellow via-alergria-orange to-alergria-pink h-5 rounded-full transition-all duration-1000 ease-out" style="width: 70%"></div>
+                </div>
+                <p class="text-sm font-bold text-right text-gray-600 dark:text-gray-300">70% da meta atingida</p>
+            </div>
+        </section>
+
+        <!-- Doar View -->
+        <section id="view-doar" class="view-section py-8">
+             <div class="inline-flex items-center mb-8 cursor-pointer text-alergria-blue hover:text-blue-700 dark:text-blue-400 transition-all duration-300 hover:-translate-x-2 font-bold bg-white/70 backdrop-blur-sm dark:bg-gray-800/70 px-5 py-2 rounded-full shadow-sm border border-white/40" onclick="showView('view-ajudar')">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voltar
+            </div>
+            <h2 class="font-fredoka text-3xl font-bold text-alergria-blue mb-6">Simulação de Doação</h2>
+            <div class="max-w-md mx-auto bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl border border-white/40 dark:border-gray-700/50">
+                <form onsubmit="alert('Doação Simulada realizada com sucesso! O sorriso de uma criança agradece.'); event.preventDefault(); showView('view-home');">
+                    <label class="block mb-2 font-bold text-gray-700 dark:text-gray-200">Valor (R$)</label>
+                    <input type="number" class="w-full p-4 mb-5 rounded-2xl border-2 border-blue-100 focus:border-alergria-blue focus:ring-0 dark:border-gray-600 bg-white/90 dark:bg-gray-700/90 outline-none transition-colors shadow-inner" value="50">
+                    
+                    <label class="block mb-2 font-bold text-gray-700 dark:text-gray-200">Método de Pagamento</label>
+                    <select class="w-full p-4 mb-5 rounded-2xl border-2 border-blue-100 focus:border-alergria-blue focus:ring-0 dark:border-gray-600 bg-white/90 dark:bg-gray-700/90 outline-none transition-colors shadow-inner">
+                        <option>Pix</option>
+                        <option>Cartão de Crédito</option>
+                        <option>Boleto</option>
+                    </select>
+
+                    <div class="flex items-center mb-8">
+                        <input type="checkbox" id="anon" class="w-5 h-5 text-alergria-blue rounded border-gray-300 focus:ring-alergria-blue cursor-pointer">
+                        <label for="anon" class="ml-3 font-medium cursor-pointer text-gray-700 dark:text-gray-200">Desejo ficar anônimo</label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-alergria-yellow to-yellow-400 text-gray-900 text-lg font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-yellow-400/40 active:scale-95 transition-all duration-300 border border-white/40">Concluir Doação</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Login View -->
+        <section id="view-login" class="view-section py-12 text-center">
+            <h2 class="font-fredoka text-3xl font-bold mb-8 text-gray-800 dark:text-white">Acesso Administrativo</h2>
+            <div class="max-w-sm mx-auto bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl border border-white/40 dark:border-gray-700/50">
+                <input type="password" id="admin-pass" placeholder="Senha (digite: admin)" class="w-full p-4 mb-5 rounded-2xl border-2 border-gray-200 focus:border-alergria-blue focus:ring-0 dark:border-gray-600 bg-white/90 dark:bg-gray-700/90 outline-none transition-colors text-center text-lg shadow-inner">
+                <button onclick="loginAdmin()" class="w-full bg-gradient-to-r from-gray-800 to-gray-700 dark:from-gray-700 dark:to-gray-600 text-white font-bold text-lg py-4 rounded-2xl hover:shadow-lg hover:shadow-gray-500/30 active:scale-95 transition-all duration-300 border border-white/10">Entrar no Painel</button>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mt-6 bg-white/50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-700">Nota: O sistema salva os dados apenas no navegador (LocalStorage).</p>
+            </div>
+        </section>
+
+        <!-- Admin View -->
+        <section id="view-admin" class="view-section py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-fredoka text-3xl font-bold text-gray-800 dark:text-white">Painel de Moderação</h2>
+                <button onclick="showView('view-home')" class="bg-white/80 dark:bg-gray-800 text-red-500 font-bold px-5 py-2 rounded-full hover:bg-red-50 hover:text-red-600 shadow-sm border border-red-100 dark:border-red-900/30 active:scale-95 transition-all duration-300">Sair com Segurança</button>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-md dark:bg-gray-800/80 p-8 rounded-3xl shadow-xl border border-white/40 dark:border-gray-700/50 overflow-x-auto">
+                <h3 class="font-bold text-xl mb-6 text-gray-800 dark:text-white">Mensagens Aguardando Aprovação</h3>
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200/50 dark:border-gray-700/50">
+                            <th class="p-4 text-gray-500 dark:text-gray-400 font-bold">Destinatário</th>
+                            <th class="p-4 text-gray-500 dark:text-gray-400 font-bold">Mensagem</th>
+                            <th class="p-4 text-gray-500 dark:text-gray-400 font-bold">Status</th>
+                            <th class="p-4 text-gray-500 dark:text-gray-400 font-bold text-center">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        <!-- Renderizado via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/40 backdrop-blur-md dark:bg-gray-900/60 py-8 mt-12 border-t border-white/50 dark:border-gray-800 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
+            <div class="flex flex-wrap justify-center gap-6 mb-6">
+                <a href="#" class="hover:text-alergria-pink transition-colors duration-300">Sobre nós</a>
+                <a href="#" class="hover:text-alergria-blue transition-colors duration-300">Contato</a>
+                <a href="#" class="hover:text-alergria-orange transition-colors duration-300">Políticas de Privacidade</a>
+                <a href="#" class="hover:text-alergria-yellow hover:text-yellow-600 transition-colors duration-300">FAQ</a>
+            </div>
+            <p>&copy; 2026 Projeto AlerGria. Ambiente simulado - Não inserir dados reais.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Navegação com Transições Fluidas ---
+        function showView(viewId) {
+            const currentView = document.querySelector('.view-section.active');
+            if (currentView && currentView.id === viewId) return;
+
+            const activateNew = () => {
+                const newView = document.getElementById(viewId);
+                newView.classList.add('active');
+                void newView.offsetWidth; 
+                newView.classList.add('fade-in');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                if(viewId === 'view-familiar' || viewId === 'view-admin' || viewId === 'view-paciente') {
+                    renderData();
+                }
+            };
+
+            if (currentView) {
+                currentView.classList.remove('fade-in');
+                setTimeout(() => {
+                    currentView.classList.remove('active');
+                    activateNew();
+                }, 400); 
+            } else {
+                activateNew();
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // --- Lógica de Dados ---
+        let messages = JSON.parse(localStorage.getItem('alergria_msgs')) || [
+            { id: 1, code: 'Herói_01', text: 'Você é muito forte! Te amo.', status: 'Aprovado' }
+        ];
+
+        function saveMessages() {
+            localStorage.setItem('alergria_msgs', JSON.stringify(messages));
+            renderData();
+        }
+
+        function submitMessage(e) {
+            e.preventDefault();
+            const code = document.getElementById('msg-code').value;
+            const text = document.getElementById('msg-text').value;
+            
+            messages.push({
+                id: Date.now(),
+                code: code,
+                text: text,
+                status: 'Em análise' 
+            });
+            
+            document.getElementById('msg-code').value = '';
+            document.getElementById('msg-text').value = '';
+            saveMessages();
+            alert('Mensagem enviada com sucesso! Aguardando aprovação da equipe.');
+        }
+
+        function renderData() {
+            const familyList = document.getElementById('family-status-list');
+            if(familyList) {
+                familyList.innerHTML = messages.map(m => `
+                    <div class="p-5 bg-white/90 dark:bg-gray-800/90 rounded-2xl border-l-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-x-1 ${m.status === 'Aprovado' ? 'border-green-400' : 'border-alergria-yellow'} backdrop-blur-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="font-bold text-gray-800 dark:text-gray-100">Para: ${m.code}</p>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full ${m.status === 'Aprovado' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">${m.status}</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300">"${m.text}"</p>
+                    </div>
+                `).reverse().join('');
+            }
+
+            const adminBody = document.getElementById('admin-table-body');
+            if(adminBody) {
+                adminBody.innerHTML = messages.map(m => `
+                    <tr class="border-b border-gray-200/50 dark:border-gray-700/50 hover:bg-white/50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="p-4 font-bold text-gray-800 dark:text-gray-200">${m.code}</td>
+                        <td class="p-4 text-gray-600 dark:text-gray-300">"${m.text}"</td>
+                        <td class="p-4"><span class="px-3 py-1 text-xs font-bold rounded-full ${m.status === 'Aprovado' ? 'bg-green-100 text-green-700' : (m.status === 'Recusado' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700')}">${m.status}</span></td>
+                        <td class="p-4 text-center">
+                            ${m.status === 'Em análise' ? `
+                                <div class="flex justify-center space-x-2">
+                                    <button onclick="updateStatus(${m.id}, 'Aprovado')" class="text-green-600 bg-green-100 hover:bg-green-200 w-10 h-10 rounded-full shadow-sm hover:shadow active:scale-90 transition-all border border-green-200"><i class="fa-solid fa-check"></i></button>
+                                    <button onclick="updateStatus(${m.id}, 'Recusado')" class="text-red-600 bg-red-100 hover:bg-red-200 w-10 h-10 rounded-full shadow-sm hover:shadow active:scale-90 transition-all border border-red-200"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).reverse().join('');
+            }
+
+            const patientBox = document.getElementById('patient-messages');
+            if(patientBox) {
+                const approved = messages.filter(m => m.status === 'Aprovado');
+                patientBox.innerHTML = approved.length > 0 ? approved.map(m => `
+                    <div class="bg-white/90 dark:bg-gray-800/90 p-6 rounded-3xl shadow-lg border-2 border-alergria-pink/30 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-alergria-pink/20 hover:border-alergria-pink transition-all duration-300 backdrop-blur-sm">
+                        <div class="flex items-center text-alergria-pink mb-4 bg-pink-50 dark:bg-pink-900/30 w-max px-4 py-2 rounded-full border border-pink-100 dark:border-pink-900/50">
+                            <i class="fa-solid fa-heart mr-2 animate-pulse"></i> <span class="font-bold">Para: ${m.code}</span>
+                        </div>
+                        <p class="text-xl font-medium text-gray-700 dark:text-gray-200 leading-relaxed">"${m.text}"</p>
+                    </div>
+                `).reverse().join('') : '<p class="text-gray-500 col-span-2 text-center p-8 bg-white/50 dark:bg-gray-800/50 rounded-3xl font-medium border border-white/40">Nenhuma mensagem nova no momento. Logo chegará muito carinho!</p>';
+            }
+        }
+
+        function updateStatus(id, newStatus) {
+            const msg = messages.find(m => m.id === id);
+            if(msg) {
+                msg.status = newStatus;
+                saveMessages();
+            }
+        }
+
+        function loginAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if(pass === 'admin') {
+                document.getElementById('admin-pass').value = '';
+                showView('view-admin');
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+    </script>
+</body>
+</html>
